@@ -25,6 +25,10 @@ def parse_arguments():
     parser.add_argument(
         "-p", "--prefix", type=str, nargs='?', const=".", default=None,
         help="prefix path (default: from config or current directory)")
+    parser.add_argument(
+        "-e", "--epsilon", type=float, nargs='?',
+        default=1.0, const=1.0,
+        help="RDP epsilon threshold in meters (default: %(default)s)")
     return parser.parse_args()
 
 def main(args):
@@ -75,9 +79,12 @@ def main(args):
         with open(purged_path, "w") as purged_file:
             purged_file.write(data.to_xml(prettyprint=False))
         print(f"Purged file {purged_path} created with {data_points} data points")
+        
+        # use config values or fall back to command line arguments or defaults
+        epsilon = args.epsilon if args.epsilon is not None else config.get('epsilon', 1.0) if config else 1.0
 
         # reduce number of points with the RDP algorithm
-        data.simplify(1)
+        data.simplify(epsilon)
         rdp_points = data.get_points_no()
         rdp_path = os.path.join(rdp_directory, os.path.split(input_path)[1])
         io.check_file(rdp_path)
