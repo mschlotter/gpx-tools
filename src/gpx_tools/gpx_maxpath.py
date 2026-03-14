@@ -217,6 +217,14 @@ def main(args=None):
             data = gpxpy.parse(input_file)
             input_filename = os.path.split(input_path)[1]
 
+        # validate GPX structure before accessing
+        if not data.tracks:
+            print(f"File {input_filename}: No tracks found - skipping.")
+            continue
+        if not data.tracks[0].segments:
+            print(f"File {input_filename}: No segments in first track - skipping.")
+            continue
+
         # find longest path
         segment = data.tracks[0].segments[0]
         max_length, path_points = find_longest_path(segment, edg)
