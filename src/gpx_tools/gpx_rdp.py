@@ -10,9 +10,10 @@ Files from an input directory are:
 """
 
 import argparse
-import gpx_io as io
-import gpxpy
 import os
+import gpxpy
+from . import gpx_io as io
+
 
 def parse_arguments():
     """Parse command line arguments."""
@@ -31,13 +32,16 @@ def parse_arguments():
         help="RDP epsilon threshold in meters (default: %(default)s)")
     return parser.parse_args()
 
-def main(args):
+def main(args=None):
     """Main function to process GPX files.
     
     Args:
-       args (argparse.Namespace): command line arguments
-    """ 
-
+       args (argparse.Namespace): command line arguments (optional)
+    """
+    
+    if args is None:
+        args = parse_arguments()
+    
     # load configuration
     config = io.load_config(args.config)
     
@@ -93,5 +97,4 @@ def main(args):
         print(f"Simplified file {rdp_path} created with {rdp_points} data points.")
 
 if __name__ == "__main__":
-    args = parse_arguments()
-    main(args)
+    main()

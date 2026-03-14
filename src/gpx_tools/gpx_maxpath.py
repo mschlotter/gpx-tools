@@ -16,11 +16,12 @@ path in km.
 """
 
 import argparse
-import math 
-import numpy as np
-import gpx_io as io
-import gpxpy
+import math
 import os
+import gpxpy
+import numpy as np
+from . import gpx_io as io
+
 
 def parse_arguments():
     """Parses command line arguments."""
@@ -177,12 +178,15 @@ def generate_filename(data, input_filename, max_length):
 
     return filename
 
-def main(args):
+def main(args=None):
     """Main function to process GPX files.
     
     Args:
-       args (argparse.Namespace): command line arguments
+       args (argparse.Namespace): command line arguments (optional)
     """ 
+
+    if args is None:
+        args = parse_arguments()
 
     # load configuration
     config = io.load_config(args.config)
@@ -270,5 +274,4 @@ def main(args):
         print(f"Processed file saved as {output_filename}.")
 
 if __name__ == "__main__":
-    args = parse_arguments()
-    main(args)
+    main()

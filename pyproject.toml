@@ -14,3 +14,7 @@ dependencies = [
 [project.scripts]
 gpx_rdp = "gpx_tools.gpx_rdp:main"
 gpx_maxpath = "gpx_tools.gpx_maxpath:main"
+
+[build-system]
+requires = ["uv_build>=0.10.0"]
+build-backend = "uv_build"
