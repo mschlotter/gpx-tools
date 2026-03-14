@@ -95,5 +95,5 @@ def read_file(file_path):
 
 def write_file(file_path, lines):
     """Write the specified list of strings to a file."""
-    with open(file_path, 'w') as file:
+    with open(file_path, 'w', newline='\n') as file:
         file.writelines(lines)

@@ -265,7 +265,7 @@ def main(args):
         output_path = os.path.join(output_subdir, output_filename)
 
         io.check_file(output_path)
-        with open(output_path, 'w') as output_file:
+        with open(output_path, 'w', newline='\n') as output_file:
             output_file.write(data.to_xml())
         print(f"Processed file saved as {output_filename}.")
 

@@ -76,7 +76,7 @@ def main(args):
                     point.extensions = None
         purged_path = os.path.join(purged_directory, os.path.split(input_path)[1])
         io.check_file(purged_path)
-        with open(purged_path, "w") as purged_file:
+        with open(purged_path, "w", newline='\n') as purged_file:
             purged_file.write(data.to_xml(prettyprint=False))
         print(f"Purged file {purged_path} created with {data_points} data points")
         
@@ -88,7 +88,7 @@ def main(args):
         rdp_points = data.get_points_no()
         rdp_path = os.path.join(rdp_directory, os.path.split(input_path)[1])
         io.check_file(rdp_path)
-        with open(rdp_path, "w") as rdp_file:
+        with open(rdp_path, "w", newline='\n') as rdp_file:
             rdp_file.write(data.to_xml(prettyprint=False))
         print(f"Simplified file {rdp_path} created with {rdp_points} data points.")
 
