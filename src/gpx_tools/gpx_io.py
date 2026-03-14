@@ -49,6 +49,10 @@ def load_config(config_path):
 
 def list_files(directory):
     """List all GPX files in the specified directory."""
+    if not os.path.exists(directory):
+        print(f"Warning: Directory '{directory}' does not exist.")
+        return []
+    
     file_list = []
     for root, _, files in os.walk(directory):
         for file_name in files:

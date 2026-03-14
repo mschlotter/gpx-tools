@@ -57,7 +57,7 @@ def main(args):
     for input_path in input_paths:
 
         # backup original file
-        original_path = original_directory + os.path.split(input_path)[1]
+        original_path = os.path.join(original_directory, os.path.split(input_path)[1])
         io.backup_file(input_path, original_path)
 
         # open file
@@ -70,7 +70,7 @@ def main(args):
             for segment in track.segments:
                 for point in segment.points:
                     point.extensions = None
-        purged_path = purged_directory + os.path.split(input_path)[1]
+        purged_path = os.path.join(purged_directory, os.path.split(input_path)[1])
         io.check_file(purged_path)
         with open(purged_path, "w") as purged_file:
             purged_file.write(data.to_xml(prettyprint=False))
@@ -79,7 +79,7 @@ def main(args):
         # reduce number of points with the RDP algorithm
         data.simplify(1)
         rdp_points = data.get_points_no()
-        rdp_path = rdp_directory + os.path.split(input_path)[1]
+        rdp_path = os.path.join(rdp_directory, os.path.split(input_path)[1])
         io.check_file(rdp_path)
         with open(rdp_path, "w") as rdp_file:
             rdp_file.write(data.to_xml(prettyprint=False))
