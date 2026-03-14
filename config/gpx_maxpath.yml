@@ -1,0 +1,4 @@
+# YAML configuration file for GPX_MAXPATH
+prefix: "data_maxpath/"
+dist: 100  # minimum distance in km
+edg: 3     # number of straight edges

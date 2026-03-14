@@ -1,0 +1,16 @@
+[project]
+name = "gpx-tools"
+version = "0.1.0"
+description = "Toolbox for processing GPX files"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "gpxpy>=1.6",
+    "lxml>=5.0",
+    "numpy>=2.4",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+gpx_rdp = "gpx_tools.gpx_rdp:main"
+gpx_maxpath = "gpx_tools.gpx_maxpath:main"
