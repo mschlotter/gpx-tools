@@ -18,3 +18,10 @@ gpx_maxpath = "gpx_tools.gpx_maxpath:main"
 [build-system]
 requires = ["uv_build>=0.10.0"]
 build-backend = "uv_build"
+
+[tool.ruff.format]
+docstring-code-format = false
+docstring-code-line-length = 80
+
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 80
