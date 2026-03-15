@@ -3,10 +3,10 @@
 It removes all GPX extensions and reduces the number of track points with the
 Rahmer-Douglas-Peuker algorithm.
 
-Files from an input directory are:
-1. copied unmodified to a data store directory gpx_original
-2. stripped of the extensions and then placed in a directory gpx_purged
-3. simplified with the RDP algorithm and stored in the directory gpx_rdp
+Files from an input directory 'gpx_input' are:
+1. copied unmodified to a data store directory 'gpx_original'
+2. stripped of the extensions and then placed in a directory 'gpx_purged'
+3. simplified with the RDP algorithm and stored in the directory 'gpx_rdp'
 """
 
 import argparse

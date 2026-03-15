@@ -1,17 +1,17 @@
 """GXP_MAXPATH finds the longest path with X straight edges in a GPX track.
 
-It uses dynamic programming to calculate the longest path of three staight
-edges. All GPX files from an input directory are processed and those whose
-X-edge path is longer than the specified threshold (default: 100km) are moved
-to the output directory, mirroring the original subfolder structure. Only the
+It uses dynamic programming to calculate the longest path of n (default: 3) straight
+edges. All GPX files from an input directory 'gpx_input' are processed and those whose
+n-edge path is longer than the specified threshold (default: 100km) are moved
+to the output directory 'gpx_processed', mirroring the original subfolder structure. Only the
 first track and its first segment in the input GPX file are processed and
 preserved. The route (= declaration) is converted to waypoints, and the four
-points corresponding to the 3-edge path are stored as route in the output GPX
+points corresponding to the n-edge path are stored as route in the output GPX
 file.
 
 The output file name is DATE_IGC_REG_LEN.GPX, where DATE is the date of the GPX
 file, IGC is the original .IGC file name, REG is the competition number or
-registration number of the aircraft, and LEN is the length of the longest 3-edge
+registration number of the aircraft, and LEN is the length of the longest n-edge
 path in km.
 """
 
@@ -38,7 +38,7 @@ def parse_arguments():
     parser.add_argument(
         "-d", "--dist", type=float, nargs='?',
         default=100, const=100,  
-        help="min. distance of the 3-segment path in km (default: %(default)s)")
+        help="min. distance of the n-segment path in km (default: %(default)s)")
     parser.add_argument(
         "-e", "--edg", type=int, nargs='?',
         default=3, const=3,  
@@ -77,21 +77,21 @@ def haversine_distance(p1, p2):
     return distance
 
 def find_longest_path(segment, edges):
-    """Finds the longest path with three straight edges in a track.
+    """Finds the longest path with n straight edges in a track.
 
     Args:
         segment (gpxpy.GPXTrackSegment): track segment
         edges (int): number of path edges
 
     Returns:
-        tuple: (max_length, list_of_4_points)
-            - max_length (float): the length of the longest 3-edge path in km
-            - list_of_4_points_coords (list): 4 vertices of that path
-        Returns (0, []) if no such path can be formed (e.g., if N < 4).
+        tuple: (max_length, list_of_n+1_points)
+            - max_length (float): the length of the longest n-edge path in km
+            - list_of_n+1_points_coords (list): n+1 vertices of that path
+        Returns (0, []) if no such path can be formed (e.g., if N < n+1).
     """
     N = segment.get_points_no()
 
-    # if fewer than 4 points, no 3-edge path exists
+    # if fewer than n+1 points, no n-edge path exists
     if N < edges+1:
         print(f"Track has too few points. Cannot form a {edges}-edge path.")
         return 0, []
@@ -155,7 +155,7 @@ def generate_filename(data, input_filename, max_length):
     Args:
         data (gpxpy.GPX): GPX data
         input_filename (str): input file name
-        max_length (float): length of the longest 3-edge path
+        max_length (float): length of the longest n-edge path
         
     Returns:
         str: the output file name
