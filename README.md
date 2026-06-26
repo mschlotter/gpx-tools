@@ -1,6 +1,7 @@
 # GPX Tools
 
-A collection of file type conversion scripts and Python utilities for processing and analyzing GPX (GPS Exchange Format) files. 
+A collection of file type conversion scripts and Python utilities for processing
+and analyzing GPX (GPS Exchange Format) files. 
 
 ## File Type Conversion Scripts (Bash)
 - **IGC2GPX** - Converts IGC files from flight recorders to GPX files using gpsbabel
@@ -35,16 +36,18 @@ uv sync
 
 ### GPX_MAXPATH - Find Longest Path
 
-Finds the longest path with X straight edges in GPX tracks and filters based on distance threshold. The input files are assumed to be GPX files, converted from IGC files with the igc2gpx.sh script.
+Finds the longest path with X straight edges in GPX tracks and filters based on
+distance threshold. The input files are assumed to be GPX files, converted from
+IGC files with the igc2gpx.sh script.
 
-It uses dynamic programming to calculate the longest path of n (default: 3) straight
-edges. All GPX files from an input directory 'gpx_input' are processed and those whose
-n-edge path is longer than the specified threshold (default: 100km) are moved
-to the output directory 'gpx_processed', mirroring the original subfolder structure. Only the
-first track and its first segment in the input GPX file are processed and
-preserved. The route (= declaration) is converted to waypoints, and the four
-points corresponding to the n-edge path are stored as route in the output GPX
-file.
+It uses dynamic programming to calculate the longest path of n (default: 3)
+straight edges. All GPX files from an input directory 'gpx_input' are processed
+and those whose n-edge path is longer than the specified threshold (default:
+100km) are moved to the output directory 'gpx_processed', mirroring the original
+subfolder structure. Only the first track and its first segment in the input GPX
+file are processed and preserved. The route (= declaration) is converted to
+waypoints, and the four points corresponding to the n-edge path are stored as
+route in the output GPX file.
 
 The output file name is DATE_IGC_REG_LEN.GPX, where DATE is the date of the GPX
 file, IGC is the original .IGC file name, REG is the competition number or
