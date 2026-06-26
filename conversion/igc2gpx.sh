@@ -12,18 +12,16 @@ GPSBABEL_CMD="gpsbabel"
 ### functions
 function display_usage {
 cat << _EOF_
-Usage: $(basename "$0") [INPUT_DIRECTORY] [OUTPUT_DIRECTORY]
+Usage: $(basename "$0") [--input INPUT_DIRECTORY] [--output OUTPUT_DIRECTORY]
 
 Converts IGC files to GPX files using gpsbabel.
 
-Arguments:
-  INPUT_DIRECTORY   Optional. Directory containing .igc files (and subdirectories).
-                    Defaults to '$DEFAULT_INPUT_DIR' if not specified.
-  OUTPUT_DIRECTORY  Optional. Directory where .gpx files will be stored.
-                    Defaults to '$DEFAULT_OUTPUT_DIR' if not specified.
-
 Options:
-  -h | --help       Display this help message and exit.
+  --input DIR       Optional. Directory containing .igc files (and subdirectories).
+                    Defaults to '$DEFAULT_INPUT_DIR'.
+  --output DIR      Optional. Directory where .gpx files will be stored.
+                    Defaults to '$DEFAULT_OUTPUT_DIR'.
+  -h, --help        Display this help message and exit.
 
 Requires 'gpsbabel' to be installed and in the system PATH.
 _EOF_
@@ -104,17 +102,46 @@ function perform_conversion {
 }
 
 ### main
-if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-    display_usage
-    exit 0
-fi
+INPUT_DIR=""
+OUTPUT_DIR=""
 
-# determine input and output directories
-ARG_INPUT_DIR="${1:-$DEFAULT_INPUT_DIR}"
-ARG_OUTPUT_DIR="${2:-$DEFAULT_OUTPUT_DIR}"
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            display_usage
+            exit 0
+            ;;
+        -i|--input)
+            if [[ -n "$2" && ! "$2" =~ ^- ]]; then
+                INPUT_DIR="$2"
+                shift 2
+            else
+                echo "Error: -i/--input requires a directory argument." >&2
+                exit 1
+            fi
+            ;;
+        -o|--output)
+            if [[ -n "$2" && ! "$2" =~ ^- ]]; then
+                OUTPUT_DIR="$2"
+                shift 2
+            else
+                echo "Error: -o/--output requires a directory argument." >&2
+                exit 1
+            fi
+            ;;
+        *)
+            echo "Error: Unknown option '$1'. Use --help for usage." >&2
+            exit 1
+            ;;
+    esac
+done
+
+# apply defaults for any unspecified arguments
+INPUT_DIR="${INPUT_DIR:-$DEFAULT_INPUT_DIR}"
+OUTPUT_DIR="${OUTPUT_DIR:-$DEFAULT_OUTPUT_DIR}"
 
 # perform setup and validation - exit if it fails
-if ! setup_and_validate_paths "$ARG_INPUT_DIR" "$ARG_OUTPUT_DIR"; then
+if ! setup_and_validate_paths "$INPUT_DIR" "$OUTPUT_DIR"; then
     exit 1
 fi
 
