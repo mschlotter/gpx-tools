@@ -12,16 +12,33 @@ dependencies = [
 ]
 
 [project.scripts]
-gpx_rdp = "gpx_tools.gpx_rdp:main"
-gpx_maxpath = "gpx_tools.gpx_maxpath:main"
+gpx-rdp = "gpx_tools.gpx_rdp:main"
+gpx-maxpath = "gpx_tools.gpx_maxpath:main"
 
 [build-system]
 requires = ["uv_build>=0.10.0"]
 build-backend = "uv_build"
 
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+
 [tool.ruff.format]
 docstring-code-format = false
 docstring-code-line-length = 80
 
+[tool.ruff.lint]
+select = [
+    "D",    # pydocstyle (checks docstrings)
+    "E",    # pycodestyle (general errors)
+    "F",    # pyflakes (common bugs)
+    "I",    # isort (sorts imports)
+    "UP",   # pyupgrade (updates old syntax)
+    "W",    # pycodestyle (general warnings)
+]
+
 [tool.ruff.lint.pycodestyle]
 max-doc-length = 80
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
