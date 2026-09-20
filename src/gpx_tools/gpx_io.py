@@ -3,6 +3,7 @@
 import filecmp
 import os
 import shutil
+
 import yaml
 
 
@@ -22,7 +23,7 @@ def load_config(config_path):
     """
     # Try the provided path first
     if os.path.exists(config_path):
-        with open(config_path, "r") as f:
+        with open(config_path) as f:
             return yaml.safe_load(f)
 
     # Get the project root (grandparent of this module's directory)
@@ -33,14 +34,14 @@ def load_config(config_path):
     config_path_project = os.path.join(project_root, "config", config_path)
     if os.path.exists(config_path_project):
         print(f"Found config file at: {config_path_project}")
-        with open(config_path_project, "r") as f:
+        with open(config_path_project) as f:
             return yaml.safe_load(f)
 
     # Try config/ directory relative to module location
     config_path_module = os.path.join(module_dir, "config", config_path)
     if os.path.exists(config_path_module):
         print(f"Found config file at: {config_path_module}")
-        with open(config_path_module, "r") as f:
+        with open(config_path_module) as f:
             return yaml.safe_load(f)
 
     # Config file not found
@@ -89,7 +90,7 @@ def backup_file(file_path, backup_path):
 
 
 def check_file(file_path):
-    """Check if the specified file exists and create a backup copy if it does."""
+    """Check if the specified file exists - if so, create a backup copy."""
     if os.path.isfile(file_path):
         shutil.move(file_path, file_path + ".bak")
         print(f"File {file_path} already existed: .bak appended to old file.")
@@ -97,7 +98,7 @@ def check_file(file_path):
 
 def read_file(file_path):
     """Read the specified file and return its contents as a list of strings."""
-    with open(file_path, "r") as file:
+    with open(file_path) as file:
         lines = file.readlines()
     return lines
 

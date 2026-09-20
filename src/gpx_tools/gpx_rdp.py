@@ -11,7 +11,9 @@ Files from an input directory 'gpx_input' are:
 
 import argparse
 import os
+
 import gpxpy
+
 from . import gpx_io as io
 
 
@@ -55,7 +57,6 @@ def main(args=None):
     Args:
        args (argparse.Namespace): command line arguments (optional)
     """
-
     if args is None:
         args = parse_arguments()
 
@@ -85,7 +86,7 @@ def main(args=None):
         io.backup_file(input_path, original_path)
 
         # open file
-        with open(input_path, "r") as input_file:
+        with open(input_path) as input_file:
             data = gpxpy.parse(input_file)
         data_points = data.get_points_no()
 

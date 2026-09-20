@@ -18,8 +18,10 @@ path in km.
 import argparse
 import math
 import os
+
 import gpxpy
 import numpy as np
+
 from . import gpx_io as io
 
 
@@ -222,7 +224,6 @@ def main(args=None):
     Args:
        args (argparse.Namespace): command line arguments (optional)
     """
-
     if args is None:
         args = parse_arguments()
 
@@ -256,7 +257,7 @@ def main(args=None):
     input_paths = io.list_files(input_directory)
     for input_path in input_paths:
         # open file
-        with open(input_path, "r") as input_file:
+        with open(input_path) as input_file:
             data = gpxpy.parse(input_file)
             input_filename = os.path.split(input_path)[1]
 
