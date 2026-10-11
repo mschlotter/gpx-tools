@@ -1,4 +1,4 @@
-"""GXP_MAXPATH finds the longest path with X straight edges in a GPX track.
+"""GPX_MAXPATH finds the longest path with X straight edges in a GPX track.
 
 It uses dynamic programming to calculate the longest path of n (default: 3)
 straight edges. All GPX files from an input directory 'gpx_input' are processed
@@ -75,11 +75,11 @@ def haversine_distance(
     """Calculates the great-circle distance between two points on the Earth.
 
     Args:
-        p1 (gpxpy.GPXTrackPoint): first point
-        p2 (gpxpy.GPXTrackPoint): second point
+        p1: First point.
+        p2: Second point.
 
     Returns:
-        float: The distance between p1 and p2 in kilometers
+        A float specifying the distance between p1 and p2 in kilometers.
     """
     lat1, lon1 = p1.latitude, p1.longitude
     lat2, lon2 = p2.latitude, p2.longitude
@@ -109,17 +109,17 @@ def haversine_distance(
 def find_longest_path(
     segment: gpxpy.gpx.GPXTrackSegment, edges: int
 ) -> tuple[float, list[gpxpy.gpx.GPXTrackPoint]]:
-    """Finds the longest path with n straight edges in a track.
+    """Finds the longest path with a given number of straight edges in a track.
 
     Args:
-        segment (gpxpy.GPXTrackSegment): track segment
-        edges (int): number of path edges
+        segment: A track segment.
+        edges: Number of path edges.
 
     Returns:
-        tuple: (max_length, list_of_n+1_points)
-            - max_length (float): the length of the longest n-edge path in km
-            - list_of_n+1_points_coords (list): n+1 vertices of that path
-        Returns (0, []) if no such path can be formed (e.g., if N < n+1).
+        A tuple containing the length of the longest n-edge path in km and a
+        list of n+1 points specifying the vertices of that path.
+        The tuple is (0, []) if no such path can be formed (e.g. if the segment
+        has fewer than n+1 points).
     """
     N = segment.get_points_no()
 
@@ -191,12 +191,12 @@ def generate_filename(
     """Generates the filename of the output file.
 
     Args:
-        data: GPX data
-        input_filename: input file name
-        max_length: length of the longest n-edge path
+        data: GPX data.
+        input_filename: Input file name.
+        max_length: Length of the longest n-edge path.
 
     Returns:
-        A string containing the output file name
+        A string containing the output file name.
     """
     # date
     start_time = data.tracks[0].segments[0].get_time_bounds().start_time
@@ -231,7 +231,7 @@ def main(args: argparse.Namespace | None = None) -> None:
     """Main function to process GPX files.
 
     Args:
-       args (argparse.Namespace): command line arguments (optional)
+        args: Command line arguments (optional).
     """
     if args is None:
         args = parse_arguments()

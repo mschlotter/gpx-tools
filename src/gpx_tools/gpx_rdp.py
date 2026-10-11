@@ -18,7 +18,7 @@ from . import gpx_io as io
 
 
 def parse_arguments() -> argparse.Namespace:
-    """Parse command line arguments."""
+    """Parses command line arguments."""
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
@@ -55,7 +55,7 @@ def main(args: argparse.Namespace | None = None) -> None:
     """Main function to process GPX files.
 
     Args:
-       args (argparse.Namespace): command line arguments (optional)
+       args: Command line arguments (optional).
     """
     if args is None:
         args = parse_arguments()

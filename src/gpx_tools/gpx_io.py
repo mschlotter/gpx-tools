@@ -1,4 +1,4 @@
-"""GPX_IO handles GPX file IO."""
+"""GPX_IO contains shared GPX file IO helper functions."""
 
 import filecmp
 import os
@@ -16,10 +16,10 @@ def load_config(config_path: str) -> dict | None:
     3. config/ directory relative to this module's location
 
     Args:
-        config_path: Path to the configuration file
+        config_path: Path to the configuration file.
 
     Returns:
-        dict: Configuration dictionary or None if not found
+        A configuration dictionary or None if no config file is found.
     """
     # Try the provided path first
     if os.path.exists(config_path):
@@ -70,7 +70,7 @@ def list_files(directory: str) -> list[str]:
 
 
 def backup_file(file_path: str, backup_path: str) -> None:
-    """Move the specified file to the backup directory."""
+    """Copy the specified file to the backup directory."""
     if os.path.isfile(backup_path):
         if filecmp.cmp(file_path, backup_path, shallow=True):
             print(
@@ -90,7 +90,7 @@ def backup_file(file_path: str, backup_path: str) -> None:
 
 
 def check_file(file_path: str) -> None:
-    """Check if the specified file exists - if so, create a backup copy."""
+    """Check if the specified file exists - if so, append .bak to filename."""
     if os.path.isfile(file_path):
         shutil.move(file_path, file_path + ".bak")
         print(f"File {file_path} already existed: .bak appended to old file.")
