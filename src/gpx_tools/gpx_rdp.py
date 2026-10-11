@@ -94,7 +94,7 @@ def main(args=None):
         for track in data.tracks:
             for segment in track.segments:
                 for point in segment.points:
-                    point.extensions = None
+                    point.extensions.clear()
         purged_path = os.path.join(purged_directory, os.path.split(input_path)[1])
         io.check_file(purged_path)
         with open(purged_path, "w", newline="\n") as purged_file:
