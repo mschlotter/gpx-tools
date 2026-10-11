@@ -20,6 +20,7 @@ import math
 import os
 
 import gpxpy
+import gpxpy.gpx
 import numpy as np
 
 from . import gpx_io as io
@@ -310,7 +311,7 @@ def main(args=None):
         route = gpxpy.gpx.GPXRoute()
         for ptp in path_points:
             route.points.append(
-                gpxpy.gpx.GPXWaypoint(
+                gpxpy.gpx.GPXRoutePoint(
                     ptp.latitude, ptp.longitude, ptp.elevation, ptp.time
                 )
             )
