@@ -19,17 +19,10 @@ gpx-maxpath = "gpx_tools.gpx_maxpath:main"
 requires = ["uv_build>=0.10.0"]
 build-backend = "uv_build"
 
-[tool.ruff]
-target-version = "py312"
-line-length = 88
-
-[tool.ruff.format]
-docstring-code-format = false
-docstring-code-line-length = 80
-
 [tool.ruff.lint]
 select = [
     "D",    # pydocstyle (checks docstrings)
+    "DOC",  # pydoclint (checks docstrings)
     "E",    # pycodestyle (general errors)
     "F",    # pyflakes (common bugs)
     "I",    # isort (sorts imports)
