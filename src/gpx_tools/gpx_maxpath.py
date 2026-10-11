@@ -26,7 +26,7 @@ import numpy as np
 from . import gpx_io as io
 
 
-def parse_arguments():
+def parse_arguments() -> argparse.Namespace:
     """Parses command line arguments."""
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
@@ -69,7 +69,9 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def haversine_distance(p1, p2):
+def haversine_distance(
+    p1: gpxpy.gpx.GPXTrackPoint, p2: gpxpy.gpx.GPXTrackPoint
+) -> float:
     """Calculates the great-circle distance between two points on the Earth.
 
     Args:
@@ -104,7 +106,9 @@ def haversine_distance(p1, p2):
     return distance
 
 
-def find_longest_path(segment, edges):
+def find_longest_path(
+    segment: gpxpy.gpx.GPXTrackSegment, edges: int
+) -> tuple[float, list[gpxpy.gpx.GPXTrackPoint]]:
     """Finds the longest path with n straight edges in a track.
 
     Args:
@@ -181,23 +185,27 @@ def find_longest_path(segment, edges):
     return max_overall_length, path_points
 
 
-def generate_filename(data, input_filename, max_length):
+def generate_filename(
+    data: gpxpy.gpx.GPX, input_filename: str, max_length: float
+) -> str:
     """Generates the filename of the output file.
 
     Args:
-        data (gpxpy.GPX): GPX data
-        input_filename (str): input file name
-        max_length (float): length of the longest n-edge path
+        data: GPX data
+        input_filename: input file name
+        max_length: length of the longest n-edge path
 
     Returns:
-        str: the output file name
+        A string containing the output file name
     """
     # date
-    date = data.tracks[0].segments[0].get_time_bounds().start_time.strftime("%Y%m%d")
+    start_time = data.tracks[0].segments[0].get_time_bounds().start_time
+    assert start_time is not None, "GPX file missing start_time"
+    date = start_time.strftime("%Y%m%d")
 
     # competition_id
     competition_id = ""
-    description = data.tracks[0].description
+    description = data.tracks[0].description or ""
     components = description.split("~")
     for component in components:
         if "HFCIDCOMPETITIONID:" in component:
@@ -219,7 +227,7 @@ def generate_filename(data, input_filename, max_length):
     return filename
 
 
-def main(args=None):
+def main(args: argparse.Namespace | None = None) -> None:
     """Main function to process GPX files.
 
     Args:

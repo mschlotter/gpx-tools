@@ -17,7 +17,7 @@ import gpxpy
 from . import gpx_io as io
 
 
-def parse_arguments():
+def parse_arguments() -> argparse.Namespace:
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
@@ -51,7 +51,7 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def main(args=None):
+def main(args: argparse.Namespace | None = None) -> None:
     """Main function to process GPX files.
 
     Args:

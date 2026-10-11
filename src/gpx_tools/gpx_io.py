@@ -7,7 +7,7 @@ import shutil
 import yaml
 
 
-def load_config(config_path):
+def load_config(config_path: str) -> dict | None:
     """Load configuration from YAML file with error handling.
 
     Searches for the config file in:
@@ -49,7 +49,7 @@ def load_config(config_path):
     return None
 
 
-def list_files(directory):
+def list_files(directory: str) -> list[str]:
     """List all GPX files in the specified directory."""
     if not os.path.exists(directory):
         print(f"Warning: Directory '{directory}' does not exist.")
@@ -69,7 +69,7 @@ def list_files(directory):
     return file_list
 
 
-def backup_file(file_path, backup_path):
+def backup_file(file_path: str, backup_path: str) -> None:
     """Move the specified file to the backup directory."""
     if os.path.isfile(backup_path):
         if filecmp.cmp(file_path, backup_path, shallow=True):
@@ -89,21 +89,21 @@ def backup_file(file_path, backup_path):
         print(f"Backup of input file {file_path} created.")
 
 
-def check_file(file_path):
+def check_file(file_path: str) -> None:
     """Check if the specified file exists - if so, create a backup copy."""
     if os.path.isfile(file_path):
         shutil.move(file_path, file_path + ".bak")
         print(f"File {file_path} already existed: .bak appended to old file.")
 
 
-def read_file(file_path):
+def read_file(file_path: str) -> list[str]:
     """Read the specified file and return its contents as a list of strings."""
     with open(file_path) as file:
         lines = file.readlines()
     return lines
 
 
-def write_file(file_path, lines):
+def write_file(file_path: str, lines: list[str]) -> None:
     """Write the specified list of strings to a file."""
     with open(file_path, "w", newline="\n") as file:
         file.writelines(lines)
